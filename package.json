@@ -1,0 +1,14 @@
+{
+  "name": "meeting-minutes",
+  "version": "0.1.0",
+  "description": "AI 회의록 자동 정리 - whisper.cpp + Gemini CLI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.16.0"
+  }
+}
