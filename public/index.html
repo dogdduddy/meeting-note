@@ -16,181 +16,110 @@
   --text: #e4e4e7;
   --text2: #8b8d94;
   --accent: #ef4444;
-  --accent-glow: rgba(239, 68, 68, 0.15);
   --green: #22c55e;
-  --green-glow: rgba(34, 197, 94, 0.15);
   --blue: #3b82f6;
+  --amber: #f59e0b;
   --radius: 12px;
 }
 
 body {
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  line-height: 1.6;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; line-height: 1.6;
 }
 
-/* ─── Layout ─── */
-.app {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 40px 24px;
-}
+.app { max-width: 960px; margin: 0 auto; padding: 40px 24px; }
 
 header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 32px;
 }
-
-header h1 {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
+header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
 header h1 span { color: var(--text2); font-weight: 400; }
 
 .status-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--text2);
-  display: inline-block;
-  margin-right: 8px;
-  transition: all 0.3s;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--text2); display: inline-block;
+  margin-right: 8px; transition: all 0.3s;
 }
-.status-dot.recording {
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
-  animation: pulse 1.5s ease-in-out infinite;
-}
-.status-dot.ready {
-  background: var(--green);
-}
+.status-dot.recording { background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse 1.5s ease-in-out infinite; }
+.status-dot.ready { background: var(--green); }
+.status-dot.paused { background: var(--amber); box-shadow: 0 0 8px rgba(245,158,11,0.5); }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.5; transform: scale(1.3); }
 }
 
-/* ─── Control Bar ─── */
-.controls {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
-}
+.controls { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
 
 button {
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-family: inherit; font-size: 14px; font-weight: 500;
+  border: none; border-radius: 8px; padding: 10px 20px;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 8px;
 }
 
-.btn-record {
-  background: var(--accent);
-  color: white;
-}
+.btn-record { background: var(--accent); color: white; }
 .btn-record:hover { background: #dc2626; }
 .btn-record:disabled { background: var(--surface2); color: var(--text2); cursor: not-allowed; }
 
-.btn-stop {
-  background: var(--surface2);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
+.btn-pause { background: var(--amber); color: #1a1a1a; }
+.btn-pause:hover { background: #d97706; }
+.btn-pause.is-paused { background: var(--green); color: white; }
+.btn-pause.is-paused:hover { background: #16a34a; }
+.btn-pause:disabled { background: var(--surface2); color: var(--text2); cursor: not-allowed; }
+
+.btn-stop { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
 .btn-stop:hover { background: var(--border); }
 .btn-stop:disabled { opacity: 0.4; cursor: not-allowed; }
 
-.btn-summarize {
-  background: var(--blue);
-  color: white;
-}
+.btn-summarize { background: var(--blue); color: white; }
 .btn-summarize:hover { background: #2563eb; }
 .btn-summarize:disabled { background: var(--surface2); color: var(--text2); cursor: not-allowed; }
 
-.btn-icon {
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
-}
+.btn-icon { width: 16px; height: 16px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
 
 /* ─── Panels ─── */
-.panels {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-@media (max-width: 700px) {
-  .panels { grid-template-columns: 1fr; }
-}
+.panels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 700px) { .panels { grid-template-columns: 1fr; } }
 
 .panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  display: flex; flex-direction: column;
 }
-
 .panel-header {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text2);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 14px 18px; border-bottom: 1px solid var(--border);
+  font-size: 13px; font-weight: 600; color: var(--text2);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  display: flex; align-items: center; justify-content: space-between;
 }
-
 .panel-header .count {
-  font-weight: 400;
-  font-size: 12px;
-  background: var(--surface2);
-  padding: 2px 8px;
-  border-radius: 10px;
+  font-weight: 400; font-size: 12px;
+  background: var(--surface2); padding: 2px 8px; border-radius: 10px;
 }
-
 .panel-body {
-  padding: 16px 18px;
-  flex: 1;
-  min-height: 300px;
-  max-height: 500px;
-  overflow-y: auto;
-  font-size: 14px;
-  line-height: 1.8;
+  padding: 16px 18px; flex: 1;
+  min-height: 300px; max-height: 500px;
+  overflow-y: auto; font-size: 14px; line-height: 1.8;
 }
-
 .panel-body::-webkit-scrollbar { width: 4px; }
 .panel-body::-webkit-scrollbar-track { background: transparent; }
 .panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-/* ─── Transcript Lines ─── */
+/* ─── Transcript ─── */
 .transcript-line {
-  padding: 4px 0;
-  animation: fadeIn 0.3s ease;
+  padding: 4px 0; animation: fadeIn 0.3s ease;
   border-bottom: 1px solid var(--border);
 }
 .transcript-line:last-child { border-bottom: none; }
+.transcript-line.pause-marker {
+  color: var(--amber); font-size: 12px;
+  text-align: center; opacity: 0.7; border-bottom-style: dashed;
+}
 .transcript-time {
-  font-size: 11px;
-  color: var(--text2);
-  margin-right: 8px;
+  font-size: 11px; color: var(--text2); margin-right: 8px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -200,100 +129,86 @@ button {
 }
 
 /* ─── Summary ─── */
-.summary-content {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-.summary-content h1, .summary-content h2, .summary-content h3 {
-  margin-top: 16px;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
+.summary-content { white-space: pre-wrap; word-break: break-word; }
+.summary-content h1, .summary-content h2, .summary-content h3 { margin-top: 16px; margin-bottom: 8px; font-weight: 600; }
 .summary-content h1 { font-size: 18px; }
 .summary-content h2 { font-size: 16px; }
 .summary-content h3 { font-size: 14px; color: var(--text2); }
-.summary-content ul, .summary-content ol {
-  padding-left: 20px;
-  margin: 8px 0;
-}
+.summary-content ul, .summary-content ol { padding-left: 20px; margin: 8px 0; }
 .summary-content li { margin: 4px 0; }
 
-/* ─── Empty State ─── */
+/* ─── Summary Actions ─── */
+.summary-actions {
+  display: flex; gap: 8px; padding: 12px 18px;
+  border-top: 1px solid var(--border); background: var(--surface2);
+}
+.summary-actions button {
+  font-size: 12px; padding: 6px 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text2); border-radius: 6px;
+}
+.summary-actions button:hover { color: var(--text); border-color: var(--text2); }
+.summary-actions .copied {
+  color: var(--green); border-color: var(--green);
+}
+
+/* ─── Empty ─── */
 .empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  min-height: 200px;
-  color: var(--text2);
-  font-size: 14px;
-  text-align: center;
+  display: flex; align-items: center; justify-content: center;
+  height: 100%; min-height: 200px;
+  color: var(--text2); font-size: 14px; text-align: center;
 }
-.empty-icon {
-  font-size: 32px;
-  margin-bottom: 12px;
-  opacity: 0.4;
-}
+.empty-icon { font-size: 32px; margin-bottom: 12px; opacity: 0.4; }
 
 /* ─── Timer ─── */
 .timer {
-  font-variant-numeric: tabular-nums;
-  font-size: 14px;
-  color: var(--text2);
-  padding: 10px 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  min-width: 80px;
-  text-align: center;
+  font-variant-numeric: tabular-nums; font-size: 14px; color: var(--text2);
+  padding: 10px 16px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px;
+  min-width: 80px; text-align: center;
 }
 .timer.active { color: var(--accent); }
+.timer.paused { color: var(--amber); }
 
 /* ─── Loading ─── */
-.loading {
-  display: inline-flex;
-  gap: 4px;
-  align-items: center;
-}
-.loading-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--blue);
-  animation: loadPulse 1.2s ease-in-out infinite;
-}
+.loading { display: inline-flex; gap: 4px; align-items: center; }
+.loading-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); animation: loadPulse 1.2s ease-in-out infinite; }
 .loading-dot:nth-child(2) { animation-delay: 0.15s; }
 .loading-dot:nth-child(3) { animation-delay: 0.3s; }
-@keyframes loadPulse {
-  0%, 100% { opacity: 0.3; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1); }
-}
+@keyframes loadPulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } }
 
-/* ─── Error Banner ─── */
+/* ─── Error ─── */
 .error-banner {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: 8px;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  font-size: 13px;
-  color: #fca5a5;
-  display: none;
+  background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+  font-size: 13px; color: #fca5a5; display: none;
 }
 .error-banner.visible { display: block; }
 
 /* ─── History ─── */
-.history-toggle {
-  margin-top: 32px;
-  text-align: center;
-}
+.history-section { margin-top: 32px; }
+.history-toggle { text-align: center; }
 .history-toggle button {
-  background: transparent;
-  color: var(--text2);
-  border: 1px solid var(--border);
-  font-size: 13px;
-  margin: 0 auto;
+  background: transparent; color: var(--text2);
+  border: 1px solid var(--border); font-size: 13px; margin: 0 auto;
 }
 .history-toggle button:hover { color: var(--text); border-color: var(--text2); }
+
+.history-list { margin-top: 16px; }
+.history-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px;
+  margin-bottom: 8px; cursor: pointer; transition: all 0.2s;
+}
+.history-item:hover { border-color: var(--text2); background: var(--surface2); }
+.history-item-date { font-size: 14px; font-weight: 500; }
+.history-item-badges { display: flex; gap: 6px; font-size: 11px; }
+.history-item-badges span {
+  padding: 2px 8px; border-radius: 4px; background: var(--surface2);
+  color: var(--text2);
+}
+.history-item-badges .has { background: rgba(34,197,94,0.15); color: var(--green); }
 </style>
 </head>
 <body>
@@ -311,8 +226,10 @@ button {
 
   <div class="controls">
     <button class="btn-record" id="btnRecord" onclick="startRecording()">
-      <span class="btn-icon" style="background:white"></span>
-      녹음 시작
+      <span class="btn-icon" style="background:white"></span> 녹음 시작
+    </button>
+    <button class="btn-pause" id="btnPause" onclick="pauseRecording()" disabled>
+      ⏸ 일시정지
     </button>
     <button class="btn-stop" id="btnStop" onclick="stopRecording()" disabled>
       녹음 종료
@@ -330,75 +247,114 @@ button {
       </div>
       <div class="panel-body" id="transcriptPanel">
         <div class="empty">
-          <div>
-            <div class="empty-icon">🎙️</div>
-            녹음을 시작하면 여기에<br>실시간 자막이 표시됩니다
-          </div>
+          <div><div class="empty-icon">🎙️</div>녹음을 시작하면 여기에<br>실시간 자막이 표시됩니다</div>
         </div>
       </div>
     </div>
 
-    <div class="panel">
+    <div class="panel" id="summaryPanelWrap">
       <div class="panel-header">
         회의 요약
         <span class="count" id="summaryStatus">대기</span>
       </div>
       <div class="panel-body" id="summaryPanel">
         <div class="empty">
-          <div>
-            <div class="empty-icon">📋</div>
-            녹음 종료 후 요약 생성 버튼을<br>누르면 AI가 정리합니다
-          </div>
+          <div><div class="empty-icon">📋</div>녹음 종료 후 요약 생성 버튼을<br>누르면 AI가 정리합니다</div>
         </div>
+      </div>
+      <div class="summary-actions" id="summaryActions" style="display:none;">
+        <button onclick="copySummary()">📋 복사</button>
+        <button onclick="downloadSummary()">💾 파일 저장</button>
       </div>
     </div>
   </div>
 
-  <div class="history-toggle">
-    <button onclick="loadHistory()">과거 회의록 보기</button>
+  <div class="history-section">
+    <div class="history-toggle">
+      <button onclick="toggleHistory()">과거 회의록 보기</button>
+    </div>
+    <div class="history-list" id="historyList" style="display:none;"></div>
   </div>
 </div>
 
 <script>
-// ─── State ───
 let ws = null;
 let timerInterval = null;
 let startTime = null;
+let pausedElapsed = 0;
 let lineCount = 0;
+let isPaused = false;
+let currentSummaryText = "";
+let currentMeetingId = "";
+let historyOpen = false;
 
 // ─── WebSocket ───
 function connectWS() {
   ws = new WebSocket(`ws://${location.host}`);
-
   ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
-
     switch (data.type) {
-      case "transcript":
-        appendTranscript(data.line);
-        break;
-      case "summary":
-        showSummary(data.content);
-        break;
+      case "transcript": appendTranscript(data.line); break;
+      case "summary": showSummary(data.content); break;
       case "status":
         if (data.summarizing !== undefined) {
-          document.getElementById("summaryStatus").textContent =
-            data.summarizing ? "생성 중..." : "완료";
+          document.getElementById("summaryStatus").textContent = data.summarizing ? "생성 중..." : "완료";
           if (data.summarizing) {
             document.getElementById("summaryPanel").innerHTML =
               '<div class="empty"><div class="loading"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div><br>Gemini가 요약을 생성하고 있습니다...</div>';
+            document.getElementById("summaryActions").style.display = "none";
           }
         }
         break;
-      case "log":
-        console.log("[whisper]", data.message);
-        break;
+      case "log": console.log("[whisper]", data.message); break;
     }
   };
-
   ws.onclose = () => setTimeout(connectWS, 2000);
 }
 connectWS();
+
+// ─── UI State ───
+function setUIState(state) {
+  const btnRecord = document.getElementById("btnRecord");
+  const btnPause = document.getElementById("btnPause");
+  const btnStop = document.getElementById("btnStop");
+  const btnSummarize = document.getElementById("btnSummarize");
+  const statusDot = document.getElementById("statusDot");
+  const timer = document.getElementById("timer");
+
+  switch (state) {
+    case "idle":
+      btnRecord.disabled = false;
+      btnPause.disabled = true;
+      btnPause.classList.remove("is-paused");
+      btnPause.textContent = "⏸ 일시정지";
+      btnStop.disabled = true;
+      btnSummarize.disabled = lineCount > 0 ? false : true;
+      statusDot.className = "status-dot ready";
+      timer.className = "timer";
+      break;
+    case "recording":
+      btnRecord.disabled = true;
+      btnPause.disabled = false;
+      btnPause.classList.remove("is-paused");
+      btnPause.textContent = "⏸ 일시정지";
+      btnStop.disabled = false;
+      btnSummarize.disabled = true;
+      statusDot.className = "status-dot recording";
+      timer.className = "timer active";
+      break;
+    case "paused":
+      btnRecord.disabled = true;
+      btnPause.disabled = false;
+      btnPause.classList.add("is-paused");
+      btnPause.textContent = "▶ 재개";
+      btnStop.disabled = false;
+      btnSummarize.disabled = true;
+      statusDot.className = "status-dot paused";
+      timer.className = "timer paused";
+      break;
+  }
+}
 
 // ─── Recording ───
 async function startRecording() {
@@ -408,23 +364,47 @@ async function startRecording() {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
 
-    document.getElementById("btnRecord").disabled = true;
-    document.getElementById("btnStop").disabled = false;
-    document.getElementById("btnSummarize").disabled = true;
-    document.getElementById("statusDot").className = "status-dot recording";
-    document.getElementById("timer").classList.add("active");
+    isPaused = false;
+    setUIState("recording");
 
-    // 트랜스크립트 패널 초기화
     document.getElementById("transcriptPanel").innerHTML = "";
     document.getElementById("summaryPanel").innerHTML =
       '<div class="empty"><div><div class="empty-icon">📋</div>녹음 종료 후 요약 생성 버튼을<br>누르면 AI가 정리합니다</div></div>';
     document.getElementById("summaryStatus").textContent = "대기";
+    document.getElementById("summaryActions").style.display = "none";
     lineCount = 0;
+    pausedElapsed = 0;
+    currentSummaryText = "";
+    currentMeetingId = data.meetingDir?.split("/").pop() || "";
     updateLineCount();
 
-    // 타이머 시작
     startTime = Date.now();
     timerInterval = setInterval(updateTimer, 1000);
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+async function pauseRecording() {
+  hideError();
+  try {
+    if (!isPaused) {
+      const res = await fetch("/api/pause", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      isPaused = true;
+      pausedElapsed += Date.now() - startTime;
+      clearInterval(timerInterval);
+      setUIState("paused");
+    } else {
+      const res = await fetch("/api/resume", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      isPaused = false;
+      startTime = Date.now();
+      timerInterval = setInterval(updateTimer, 1000);
+      setUIState("recording");
+    }
   } catch (err) {
     showError(err.message);
   }
@@ -435,14 +415,9 @@ async function stopRecording() {
     const res = await fetch("/api/stop", { method: "POST" });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
-
-    document.getElementById("btnRecord").disabled = false;
-    document.getElementById("btnStop").disabled = true;
-    document.getElementById("btnSummarize").disabled = false;
-    document.getElementById("statusDot").className = "status-dot ready";
-    document.getElementById("timer").classList.remove("active");
-
+    isPaused = false;
     clearInterval(timerInterval);
+    setUIState("idle");
   } catch (err) {
     showError(err.message);
   }
@@ -454,7 +429,6 @@ async function summarize() {
     const res = await fetch("/api/summarize", { method: "POST" });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
-    // summary는 WebSocket으로 옴
   } catch (err) {
     showError(err.message);
     document.getElementById("btnSummarize").disabled = false;
@@ -464,27 +438,36 @@ async function summarize() {
 // ─── UI Updates ───
 function appendTranscript(line) {
   const panel = document.getElementById("transcriptPanel");
-  // 첫 줄이면 empty state 제거
   if (panel.querySelector(".empty")) panel.innerHTML = "";
 
   const div = document.createElement("div");
-  div.className = "transcript-line";
 
-  const time = new Date(line.time);
-  const timeStr = time.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+  if (line.isPauseMarker) {
+    div.className = "transcript-line pause-marker";
+    div.textContent = line.text;
+  } else {
+    div.className = "transcript-line";
+    const timeStr = formatKST(line.time);
+    div.innerHTML = `<span class="transcript-time">${timeStr}</span>${escapeHtml(line.text)}`;
+    lineCount++;
+    updateLineCount();
+  }
 
-  div.innerHTML = `<span class="transcript-time">${timeStr}</span>${escapeHtml(line.text)}`;
   panel.appendChild(div);
   panel.scrollTop = panel.scrollHeight;
-
-  lineCount++;
-  updateLineCount();
 }
 
 function showSummary(content) {
+  currentSummaryText = content;
   const panel = document.getElementById("summaryPanel");
-  // 간단한 마크다운 → HTML 변환
-  let html = escapeHtml(content)
+  panel.innerHTML = `<div class="summary-content">${renderMarkdown(content)}</div>`;
+  document.getElementById("summaryStatus").textContent = "완료";
+  document.getElementById("summaryActions").style.display = "flex";
+  document.getElementById("btnSummarize").disabled = false;
+}
+
+function renderMarkdown(text) {
+  return escapeHtml(text)
     .replace(/^### (.+)$/gm, "<h3>$1</h3>")
     .replace(/^## (.+)$/gm, "<h2>$1</h2>")
     .replace(/^# (.+)$/gm, "<h1>$1</h1>")
@@ -494,10 +477,120 @@ function showSummary(content) {
     .replace(/(<li>.*<\/li>\n?)+/g, "<ul>$&</ul>")
     .replace(/\n\n/g, "<br><br>")
     .replace(/\n/g, "<br>");
+}
 
-  panel.innerHTML = `<div class="summary-content">${html}</div>`;
-  document.getElementById("summaryStatus").textContent = "완료";
-  document.getElementById("btnSummarize").disabled = false;
+// ─── 복사 / 다운로드 ───
+function copySummary() {
+  navigator.clipboard.writeText(currentSummaryText).then(() => {
+    const btns = document.querySelectorAll(".summary-actions button");
+    btns[0].textContent = "✅ 복사됨";
+    btns[0].classList.add("copied");
+    setTimeout(() => {
+      btns[0].textContent = "📋 복사";
+      btns[0].classList.remove("copied");
+    }, 2000);
+  });
+}
+
+function downloadSummary() {
+  if (currentMeetingId) {
+    window.location.href = `/api/meetings/${currentMeetingId}/download`;
+  } else {
+    const blob = new Blob([currentSummaryText], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "회의록.md";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+}
+
+// ─── 과거 회의록 ───
+function toggleHistory() {
+  historyOpen = !historyOpen;
+  const list = document.getElementById("historyList");
+  if (historyOpen) {
+    list.style.display = "block";
+    loadHistory();
+  } else {
+    list.style.display = "none";
+  }
+}
+
+async function loadHistory() {
+  try {
+    const res = await fetch("/api/meetings");
+    const meetings = await res.json();
+    const list = document.getElementById("historyList");
+
+    if (meetings.length === 0) {
+      list.innerHTML = '<div style="text-align:center;color:var(--text2);padding:20px;">저장된 회의록이 없습니다.</div>';
+      return;
+    }
+
+    list.innerHTML = meetings.map((m) => {
+      const date = formatMeetingId(m.id);
+      return `<div class="history-item" onclick="openMeeting('${m.id}')">
+        <span class="history-item-date">${date}</span>
+        <div class="history-item-badges">
+          <span class="${m.hasTranscript ? 'has' : ''}">트랜스크립트</span>
+          <span class="${m.hasSummary ? 'has' : ''}">요약</span>
+        </div>
+      </div>`;
+    }).join("");
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+async function openMeeting(id) {
+  try {
+    const res = await fetch(`/api/meetings/${id}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+
+    currentMeetingId = id;
+
+    // 트랜스크립트 패널에 표시
+    const tPanel = document.getElementById("transcriptPanel");
+    if (data.transcript) {
+      const lines = data.transcript.split("\n").filter(l => l.trim());
+      tPanel.innerHTML = lines.map(l =>
+        `<div class="transcript-line">${escapeHtml(l)}</div>`
+      ).join("");
+      document.getElementById("lineCount").textContent = `${lines.length}줄`;
+    } else {
+      tPanel.innerHTML = '<div class="empty"><div>트랜스크립트가 없습니다</div></div>';
+    }
+
+    // 요약 패널에 표시
+    if (data.summary) {
+      showSummary(data.summary);
+    } else {
+      document.getElementById("summaryPanel").innerHTML =
+        '<div class="empty"><div>요약이 아직 생성되지 않았습니다</div></div>';
+      document.getElementById("summaryActions").style.display = "none";
+    }
+
+    document.getElementById("summaryStatus").textContent = formatMeetingId(id);
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+// ─── 유틸 ───
+function formatKST(isoString) {
+  try {
+    const d = new Date(isoString);
+    return d.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "Asia/Seoul" });
+  } catch {
+    return "";
+  }
+}
+
+function formatMeetingId(id) {
+  return id.replace(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})/, "$1년 $2월 $3일 $4:$5");
 }
 
 function updateLineCount() {
@@ -505,7 +598,9 @@ function updateLineCount() {
 }
 
 function updateTimer() {
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  const currentSegment = Date.now() - startTime;
+  const totalMs = pausedElapsed + currentSegment;
+  const elapsed = Math.floor(totalMs / 1000);
   const min = String(Math.floor(elapsed / 60)).padStart(2, "0");
   const sec = String(elapsed % 60).padStart(2, "0");
   document.getElementById("timer").textContent = `${min}:${sec}`;
@@ -527,30 +622,7 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-// ─── History ───
-async function loadHistory() {
-  try {
-    const res = await fetch("/api/meetings");
-    const meetings = await res.json();
-    if (meetings.length === 0) return alert("저장된 회의록이 없습니다.");
-
-    const panel = document.getElementById("summaryPanel");
-    let html = meetings.map((m) => {
-      const date = m.id.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, "$1-$2-$3 $4:$5");
-      return `<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)">
-        <strong>${date}</strong> ${m.hasSummary ? "✅" : "📝"}
-        ${m.hasSummary ? `<div style="margin-top:8px;font-size:13px;color:var(--text2)">${escapeHtml(m.summary).slice(0, 200)}...</div>` : ""}
-      </div>`;
-    }).join("");
-
-    panel.innerHTML = html;
-    document.getElementById("summaryStatus").textContent = `${meetings.length}건`;
-  } catch (err) {
-    showError(err.message);
-  }
-}
-
-// ─── Initial Status Check ───
+// ─── 초기 상태 ───
 fetch("/api/status").then(r => r.json()).then(data => {
   if (!data.whisperExists || !data.modelExists) {
     showError(`whisper.cpp 경로를 확인하세요. 현재: ${data.whisperDir}`);
