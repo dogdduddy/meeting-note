@@ -10,7 +10,7 @@ const PORT = 3456;
 
 // whisper.cpp 경로 (환경변수 또는 기본값)
 const WHISPER_STREAM = "build/bin/whisper-stream";
-const WHISPER_MODEL = "models/ggml-large-v3-turbo.bin";
+const WHISPER_MODEL = "models/ggml-large-v3-turbo-q5_0.bin";
 const MEETINGS_DIR = "meetings";
 
 // 환각 필터 패턴
